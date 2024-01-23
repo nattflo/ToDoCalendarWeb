@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoCalendarWeb", "ToDoCalendarWeb.csproj", "{87216319-7512-44DA-9DF4-E5E2E74D2D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoCalendarWeb", "ToDoCalendarWeb.csproj", "{87216319-7512-44DA-9DF4-E5E2E74D2D47}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoCalendar.Attributes", "..\ToDoCalendar.Attributes\ToDoCalendar.Attributes.csproj", "{EA745DB6-7F06-48D9-96F6-C626F900A188}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{87216319-7512-44DA-9DF4-E5E2E74D2D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87216319-7512-44DA-9DF4-E5E2E74D2D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87216319-7512-44DA-9DF4-E5E2E74D2D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA745DB6-7F06-48D9-96F6-C626F900A188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA745DB6-7F06-48D9-96F6-C626F900A188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA745DB6-7F06-48D9-96F6-C626F900A188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA745DB6-7F06-48D9-96F6-C626F900A188}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,6 @@
 using ToDoCalendarWeb.Controllers;
+using Microsoft.EntityFrameworkCore;
+using ToDoCalendarWeb.Interceptors;
 
 var builder = WebApplication.CreateBuilder(args);
 
