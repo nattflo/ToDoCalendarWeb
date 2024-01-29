@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("test").AddInterceptors(new TrackChangesInterceptor(this));
+        optionsBuilder.UseInMemoryDatabase("TestDB").AddInterceptors(new TrackChangesInterceptor(this));
         base.OnConfiguring(optionsBuilder);
     }
 

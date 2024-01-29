@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Domain;
 using Newtonsoft.Json;
+using NuGet.Protocol;
 
 namespace ToDoCalendarWeb.Configuration;
 
@@ -18,18 +19,14 @@ public class DiffConfiguration : IEntityTypeConfiguration<Diff>
             .IsRequired();
 
         builder.Property(e => e.ObjectType)
-            .IsRequired()
-            .HasConversion(
-                type => type.ToString(),
-                type => Type.GetType(type)
-            );
+            .IsRequired();
 
         builder.Property(e => e.ChangeTime)
             .IsRequired();
 
         builder.Property(e => e.PropName)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(50);
 
         builder.Property(e => e.From)
             .IsRequired()

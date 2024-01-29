@@ -10,17 +10,14 @@ public class TaskConfiguration : IEntityTypeConfiguration<Domain.Task>
     {
         builder.HasKey(t => t.Id);
 
+        builder.Property(t => t.Id)
+            .ValueGeneratedOnAdd();
+
         builder.Property(t => t.Name)
             .IsRequired();
 
         builder.Property(t => t.PeriodId)
             .IsRequired();
-
-        builder.HasOne<Period>()
-            .WithMany()
-            .HasForeignKey(t => t.PeriodId);
-
-        builder.Ignore(t => t.IsTracked);
 
         builder.HasIndex(t => t.PeriodId);
     }
