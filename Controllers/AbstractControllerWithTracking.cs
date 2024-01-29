@@ -9,7 +9,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpGet("{entityId}/diffs/{id}")]
     public async Task<ActionResult<Diff>> GetDiff([FromRoute] Guid entityId, [FromRoute] Guid id)
     {
-        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity));
+        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name);
 
         if (diff == null)
         {
@@ -22,7 +22,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpGet("{entityId}/diffs")]
     public async Task<ActionResult<IEnumerable<Diff>>> GetDiffs([FromRoute] Guid entityId)
     {
-        var diffs = await _context.Set<Diff>().Where(d => d.ObjectId == entityId && d.ObjectType == typeof(TEntity)).ToArrayAsync();
+        var diffs = await _context.Set<Diff>().Where(d => d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name).ToArrayAsync();
 
         if (diffs == null || diffs.Length == 0)
         {
@@ -42,7 +42,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpPut("{entityId}/diffs/{id}/rollback")]
     public async Task<ActionResult> Rollback([FromRoute] Guid entityId, [FromRoute] Guid id)
     {
-        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity));
+        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name);
 
         if (diff == null)
         {

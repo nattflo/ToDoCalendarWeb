@@ -35,16 +35,7 @@ public abstract class CRUDController<TEntity, TDbContext>(TDbContext context) : 
             return BadRequest();
         }
 
-        _context.Entry(entity).State = EntityState.Modified;
-        var dbEntity = _context.Set<TEntity>().FirstOrDefault(e => e.Id == id);
-
-        if (dbEntity == null)
-        {
-            return NotFound();
-        }
-
-        dbEntity = entity;
-
+        _context.Update(entity);
         await _context.SaveChangesAsync();
 
         return NoContent();

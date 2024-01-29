@@ -9,31 +9,27 @@ public class TrackChangesInterceptor(AppDbContext appDbContext) : SaveChangesInt
 {
     public readonly AppDbContext AppDbContext = appDbContext;
 
-    public override int SavedChanges(SaveChangesCompletedEventData eventData, int result)
+    public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
-        AuditChanges(eventData);
-        return base.SavedChanges(eventData, result);
+        if (eventData.Context != null)
+        {
+            AuditChanges(eventData.Context);
+        }
+        return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
-
-    public override ValueTask<int> SavedChangesAsync(SaveChangesCompletedEventData eventData, int result, CancellationToken cancellationToken = default)
+    private void AuditChanges(DbContext context)
     {
-        AuditChanges(eventData);
-        return base.SavedChangesAsync(eventData, result, cancellationToken);
-    }
-
-    private void AuditChanges(SaveChangesCompletedEventData eventData)
-    {
-        var changed = eventData.Context?.ChangeTracker.Entries()
+        var changed = context.ChangeTracker.Entries()
             .Where(e => e.Entity != null &&
                 e.Entity is AbstractTrackableEntity entity &&
                 entity.IsTracked &&
-                e.State == EntityState.Modified);
+                e.State == EntityState.Modified).ToList();
 
         if (changed != null && changed.Any())
         {
             foreach (var entry in changed)
             {
-                var entryType = entry.Entity.GetType().BaseType;
+                var entryType = entry.Entity.GetType();
                 var id = ((AbstractTrackableEntity)entry.Entity).Id;
 
                 if (entryType != null)
@@ -43,7 +39,7 @@ public class TrackChangesInterceptor(AppDbContext appDbContext) : SaveChangesInt
                         .Select(p =>
                             new Diff()
                             {
-                                ObjectType = entryType,
+                                ObjectType = entryType.Name,
                                 ObjectId = id,
                                 From = p.OriginalValue,
                                 To = p.CurrentValue,
@@ -51,6 +47,7 @@ public class TrackChangesInterceptor(AppDbContext appDbContext) : SaveChangesInt
                                 ChangeTime = DateTime.UtcNow
                             }
                     ));
+                    AppDbContext.SaveChanges();
                 }
             }
 
