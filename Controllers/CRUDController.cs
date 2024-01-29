@@ -35,15 +35,7 @@ public abstract class CRUDController<TEntity, TDbContext>(TDbContext context) : 
             return BadRequest();
         }
 
-        try
-        {
-            _context.Update(entity);
-        }
-        catch (Exception)
-        {
-
-            throw;
-        }
+        _context.Update(entity);
         await _context.SaveChangesAsync();
 
         return NoContent();
