@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using ToDoCalendarWeb.Domain;
 
 namespace ToDoCalendarWeb.Configuration;
 

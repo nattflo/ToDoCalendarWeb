@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Domain;
 using Newtonsoft.Json;
-using NuGet.Protocol;
 
 namespace ToDoCalendarWeb.Configuration;
 
