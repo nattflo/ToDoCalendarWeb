@@ -19,7 +19,6 @@ public class TrackChangesInterceptor(AppDbContext appDbContext) : SaveChangesInt
     }
     private void AuditChanges(DbContext context)
     {
-        var df = context.ChangeTracker.Entries().ToList();
         var changed = context.ChangeTracker.Entries()
             .Where(e => e.Entity != null &&
                 e.Entity is AbstractTrackableEntity entity &&
