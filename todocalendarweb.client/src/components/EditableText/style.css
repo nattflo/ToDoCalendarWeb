@@ -1,0 +1,15 @@
+[contentEditable=true]:empty:before {
+    content: attr(data-placeholder);
+    font-style: normal;
+    opacity: 0.5;
+}
+
+[contentEditable=true]:not(:empty):focus {
+    font-style: italic;
+}
+
+.Editable{
+    text-align: left;
+    outline: 0px solid transparent;
+    margin: 0px;
+}

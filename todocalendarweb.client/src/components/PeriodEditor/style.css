@@ -1,0 +1,39 @@
+.PeriodEditor{
+    padding: 10px;
+    background-color: rgb(8,4,12);
+    border-radius: 5px;
+}
+
+.DayTimeline{
+    flex: 1;
+    display: grid;
+    grid-template-columns: fit-content(1px) 1fr;
+}
+
+.Timeline{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 4px 0px 4px;
+}
+
+.Time{
+    font-size: small;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.PeriodWrapper{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 2px;
+    align-self: center;
+    width: 200px;
+}
+
+.PeriodEditorHeader{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}

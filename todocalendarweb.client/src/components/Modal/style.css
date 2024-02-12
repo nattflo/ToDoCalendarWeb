@@ -1,0 +1,22 @@
+.ModalBackground {
+    display: flex;
+    justify-content: space-evenly;
+
+    background-color: rgba(110, 118, 129, 0.4);
+    z-index: 10;
+    top: 0px; left: 0px; right: 0px; bottom: 0px;
+    position: fixed;
+    width: 100wh;
+}
+
+.Modal {
+    position: fixed;
+    width: 80%;
+    height: 100%;
+    background-color: rgb(13, 17, 23);
+    border-radius: 10px 0px 0px 10px;
+    z-index: 100;
+    bottom: 0px;
+    right: 0px;
+    padding: 20px;
+}
