@@ -15,24 +15,17 @@ export const ModalInput = ({
     onClose = () => {}
 }: ModalInputProps) => {
 
-    const backgroundStyle: CSSProperties = {
-        backgroundColor: 'unset',
-    }
-
     const modalStyle: CSSProperties = {
         height: 'fit-content',
-        width: 'unset',
         right: '5px',
         left: '5px',
-        bottom: '5px',
+        bottom: '0px',
         borderRadius: '10px',
         padding: '5px 10px 5px 10px'
-
     }
 
     return (
         <Modal
-            backgroundStyle={backgroundStyle}
             modalStyle={modalStyle}
             onClickOutside={onClose}
             >

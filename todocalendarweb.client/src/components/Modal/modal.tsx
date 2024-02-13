@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import './style.css'
 import { CSSProperties, ReactNode } from "react";
 
@@ -16,15 +17,18 @@ export function Modal ({
 } : ModalProps) {
 
     return (
-        <>
-            <div 
-                className={'ModalBackground'}
-                onClick={onClickOutside}
-                style={backgroundStyle}
-            />
-            <div className='Modal' style={modalStyle}>
-                {children}
-            </div>
-        </>
+        createPortal(
+            <>
+                <div 
+                    className={'ModalBackground'}
+                    onClick={onClickOutside}
+                    style={backgroundStyle}
+                />
+                <div className='Modal' style={modalStyle}>
+                    {children}
+                </div>
+            </>,
+            document.body
+        )
     )
 }
