@@ -51,7 +51,7 @@ export const TaskEditor = ({
     }
 
     async function fetchTasks () {
-        const taskSchemas = await httpGet<Array<TaskSchema>>('periods/06e6d9cb-8e1e-4640-b4c9-2acd4048e86d/tasks');
+        const taskSchemas = await httpGet<Array<TaskSchema>>('periods/'+ periodId +'/tasks');
         const tasks = taskSchemas.map(schema => Task.createFromSchema(schema));
         setTasks(tasks);
     }

@@ -8,9 +8,10 @@ import './style.css';
 import { useEffect, useState } from "react";
 import { Period, PeriodSchema } from "../../models/period";
 import { BiPlusCircle } from "react-icons/bi";
-import { createPortal } from "react-dom";
 import { ModalInput } from "../Modal/ModalInput/ModalInput";
 import { httpGet, httpPost, httpPut } from "../../utils/http";
+import { useSearchParams } from "react-router-dom";
+import { PeriodEditorModal } from "./Modal/PeriodEditorModal";
 
 interface DayTimelineProps {
     workPeriod?: TimeInterval;
@@ -28,9 +29,9 @@ export const PeriodEditor = ({
     const [isInputOpen, setIsInputOpen] = useState(false);
     const [periods, setPeriods] = useState<Array<Period>>([]);
 
-    //const [searchParams] = useSearchParams();
-    //const periodId = searchParams.get("periodId");
-    //const openedPeriod = periods.find(p => p.id === periodId);
+    const [searchParams] = useSearchParams();
+    const periodId = searchParams.get("periodId");
+    const openedPeriod = periods.find(p => p.id === periodId);
 
     useEffect(() => {
         fetchPeriods();
@@ -117,17 +118,19 @@ export const PeriodEditor = ({
             </div>
             {
                 isInputOpen &&
-                createPortal(
-                    <ModalInput
+                <ModalInput
                         placeholder='Введите название периода'
                         onClose={() => setIsInputOpen(false)}
                         onChange={(periodName) => addPeriod(periodName, 1)}
-                    />, document.body)
+                />
             }
-            {/* {
+            {
                 periodId && openedPeriod !== undefined &&
-                createPortal(<PeriodEditorModal period={openedPeriod} onChange={handlePeriodChange}/>, document.body)
-            } */}
+                <PeriodEditorModal
+                    periodId={periodId}
+                    onClose={fetchPeriods}
+                />
+            }
         </div>
     )
 
