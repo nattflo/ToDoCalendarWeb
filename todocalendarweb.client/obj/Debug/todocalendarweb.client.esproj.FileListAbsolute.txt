@@ -1,2 +1,0 @@
-D:\Projects\ToDoCalendarWeb\todocalendarweb.client\obj\Debug\todocalendarweb.client.esproj.CoreCompileInputs.cache
-D:\Projects\ToDoCalendar\ToDoCalendarWeb\todocalendarweb.client\obj\Debug\todocalendarweb.client.esproj.CoreCompileInputs.cache
