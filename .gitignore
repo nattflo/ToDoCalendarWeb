@@ -399,3 +399,4 @@ FodyWeavers.xsd
 *.vsidx
 *.v2
 *.bin
+.vs/
