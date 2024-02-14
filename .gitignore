@@ -400,3 +400,9 @@ FodyWeavers.xsd
 *.v2
 *.bin
 .vs/
+
+
+bin/
+obj/
+Debug/
+Release/
