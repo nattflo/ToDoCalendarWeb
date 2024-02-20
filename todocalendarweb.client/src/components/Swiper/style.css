@@ -1,0 +1,8 @@
+.Swiper{
+    display: flex;
+    align-items: center;
+}
+
+.Slide{
+    flex: 1;
+}
