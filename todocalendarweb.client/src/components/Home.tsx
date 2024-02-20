@@ -1,17 +1,20 @@
-import { PeriodEditor } from "./PeriodEditor/PeriodEditor";
+import { Swiper } from "./Swiper/Swiper";
+
 
 const Home = () => {
     
     return (
-        <div>
-            {/* <TaskEditor
-                mode={TaskWrapperModes.Editing}
-                periodId='06e6d9cb-8e1e-4640-b4c9-2acd4048e86d'
-            /> */}
-            <PeriodEditor
-                routineId='06e6d9cb-8e1e-4640-b4c9-2acd4048e86d'
-            />
-        </div>
+        <Swiper
+            slidesPerView={3}
+        >
+            <div>mon</div>
+            <div>tue</div>
+            <div>wed</div>
+            <div>thu</div>
+            <div>fri</div>
+            <div>sat</div>
+            <div>sun</div>
+        </Swiper>
     );
 
 }
