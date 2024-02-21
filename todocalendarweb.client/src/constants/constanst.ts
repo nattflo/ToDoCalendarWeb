@@ -11,11 +11,11 @@ export const TIME_STEP: Time = Time.createFromHoursAndMinutes(0, 30);
 export const TIME_STEPS_COUNT = (DAY_END_TIME.totalMinutes-DAY_START_TIME.totalMinutes)/TIME_STEP.totalMinutes;
 
 export const WORK_DAYS = [
-    //'Monday',
-    //'Tuesday',
-    //'Wedensday',
-    //'Thrustday',
-    'Friday',
-    //'Saturday',
-    //'Sunday'
+    'Понедельник',
+    'Вторник',
+    'Среда',
+    'Четверг',
+    'Пятница',
+    'Суббота',
+    'Воскресенье'
 ]

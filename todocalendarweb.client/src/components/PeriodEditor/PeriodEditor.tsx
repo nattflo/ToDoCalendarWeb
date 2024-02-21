@@ -14,17 +14,21 @@ import { useSearchParams } from "react-router-dom";
 import { PeriodEditorModal } from "./Modal/PeriodEditorModal";
 
 interface DayTimelineProps {
-    workPeriod?: TimeInterval;
-    timelineTimeStep?: Time;
-    periodTimeStep?: Time;
-    routineId: string;
+    workPeriod?: TimeInterval
+    title: string
+    timelineTimeStep?: Time
+    periodTimeStep?: Time
+    routineId: string
+    dayOfWeek: number
 }
 
 export const PeriodEditor = ({
     workPeriod = DAY_WORK_INTERVAL,
     periodTimeStep = TIME_STEP,
     timelineTimeStep = Time.createFromHoursAndMinutes(1, 0),
-    routineId
+    title,
+    routineId,
+    dayOfWeek,
 }: DayTimelineProps)  => {
     const [isInputOpen, setIsInputOpen] = useState(false);
     const [periods, setPeriods] = useState<Array<Period>>([]);
@@ -92,7 +96,7 @@ export const PeriodEditor = ({
         <div className='PeriodEditor'>
             <div className="PeriodEditorHeader">
                 <span className="PeriodTitle">
-                    Понедельник
+                    {title}
                 </span>
                 <BiPlusCircle onClick={openModalInput}/>
             </div>
@@ -121,7 +125,7 @@ export const PeriodEditor = ({
                 <ModalInput
                         placeholder='Введите название периода'
                         onClose={() => setIsInputOpen(false)}
-                        onChange={(periodName) => addPeriod(periodName, 1)}
+                        onChange={(periodName) => addPeriod(periodName)}
                 />
             }
             {
@@ -135,12 +139,12 @@ export const PeriodEditor = ({
     )
 
     async function fetchPeriods(){
-        const periodSchemas = await httpGet<Array<PeriodSchema>>('routines/06e6d9cb-8e1e-4640-b4c9-2acd4048e86d/periods')
+        const periodSchemas = await httpGet<Array<PeriodSchema>>('routines/'+routineId+'/periods')
         const periods = periodSchemas.map(schema => Period.createFromSchema(schema));
-        setPeriods(periods);
+        setPeriods(periods.filter(p => p.dayOfWeek == dayOfWeek));
     }
 
-    async function addPeriod (name: string, dayOfWeek: number) {
+    async function addPeriod (name: string) {
         setIsInputOpen(false);
         const freeTimeInterval = getFreeTimePeriod();
         if(freeTimeInterval != undefined){
