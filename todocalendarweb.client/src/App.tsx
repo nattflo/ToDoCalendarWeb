@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
 import { Home } from './components/Home';
 import { RoutineEditor } from './components/RoutineEditor/RoutineEditor';
+import { Routines } from './components/Routines/Routines';
 
 
 const App = () => {
@@ -14,6 +15,10 @@ const App = () => {
         {
             path: "/routines/:id",
             element: <RoutineEditor/>
+        },
+        {
+            path: '/routines',
+            element: <Routines/>
         }
       ]);
 

@@ -44,7 +44,7 @@ export const TaskEditor = ({
     }
 
     async function addTask (taskSchema: TaskSchema) {
-        const newTaskSchema = await httpPost<TaskSchema, TaskSchema>('tasks', taskSchema);
+        const newTaskSchema = await httpPost<TaskSchema>('tasks', taskSchema);
         const task = Task.createFromSchema(newTaskSchema);
         const newTasks : Array<Task> = tasks != undefined ? [...tasks, task] : [task];
         setTasks(newTasks);
