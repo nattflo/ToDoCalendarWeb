@@ -10,14 +10,14 @@ export async function httpGet<T>(request: string): Promise<T> {
     return body;
 }
 
-export async function httpPost<TOuput,TInput>(request: string, entity: TInput){
+export async function httpPost<T>(request: string, entity: T){
     const response = await fetch('/api/'+request, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(entity)
     });
 
-    const body : TOuput = await response.json();
+    const body : T = await response.json();
 
     if(!response.ok){
         throw new Error(response.statusText);

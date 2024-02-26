@@ -1,0 +1,38 @@
+.RoutinesHeader{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.RoutinesWrapper{
+    list-style-type: none;
+}
+
+.Routine{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 80%;
+    height: fit-content;
+
+    border-radius: 5px;
+    margin: 5px 0px 5px 0px;
+    padding: 10px;
+
+    background-color: rgb(24,28,36);
+}
+
+.RoutineHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.RemoveIcon{
+    cursor: pointer;
+}

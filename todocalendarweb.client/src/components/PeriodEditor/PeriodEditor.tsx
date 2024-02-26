@@ -149,7 +149,7 @@ export const PeriodEditor = ({
         const freeTimeInterval = getFreeTimePeriod();
         if(freeTimeInterval != undefined){
             const periodSchema = {name: name, routineId: routineId, timePeriod: freeTimeInterval.schema, dayOfWeek: dayOfWeek}
-            const schema = await httpPost<PeriodSchema, PeriodSchema>('periods', periodSchema);
+            const schema = await httpPost<PeriodSchema>('periods', periodSchema);
             const period = Period.createFromSchema(schema);
             const newPeriods : Array<Period> = periods.length != 0 ? [...periods, period] : [period];
             setPeriods(newPeriods);

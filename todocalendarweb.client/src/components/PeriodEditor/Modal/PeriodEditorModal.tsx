@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { EditableText } from '../../EditableText/EditableText';
 import TaskWrapperModes, { TaskEditor } from '../../TaskEditor/TaskEditor';
 import { Period, PeriodSchema } from '../../../models/period';
-import { httpDelete, httpGet } from '../../../utils/http';
+import { httpDelete, httpGet, httpPut } from '../../../utils/http';
 import { BiTrashAlt } from 'react-icons/bi';
 
 interface PeriodEditorModalProps {
@@ -47,12 +47,13 @@ export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorMod
             onClickOutside={close}
         >
             {
-                !isLoading &&
+                !isLoading && period != undefined &&
                 <div className='ModalContent'>
                     <div className="PeriodEditorHeader">
                         <EditableText
                             tag={'h2'}
                             text={period?.name}
+                            onChange={name => updatePeriod(new Period(period.id, name, period.routineId, period.dayOfWeek, period.timeInterval))}
                         />
                     </div>
                     <div className="PeriodEditorBody">
@@ -92,5 +93,10 @@ export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorMod
         const period = Period.createFromSchema(periodSchema)
         setPeriod(period)
         setIsLoading(false)
+    }
+
+    async function updatePeriod(changedPeriod: Period){
+        httpPut<PeriodSchema>('periods', changedPeriod.id, changedPeriod.schema)
+        setPeriod(period)
     }
 }
