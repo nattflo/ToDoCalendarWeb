@@ -3,6 +3,8 @@ import './App.css';
 import { Home } from './components/Home';
 import { RoutineEditor } from './components/RoutineEditor/RoutineEditor';
 import { Routines } from './components/Routines/Routines';
+import { PeriodsProvider } from './contexts/PeriodContext';
+import { RoutinesProvider } from './contexts/RoutineContext';
 
 
 const App = () => {
@@ -23,7 +25,11 @@ const App = () => {
       ]);
 
     return (
-        <RouterProvider router={router}/>
+        <RoutinesProvider>
+            <PeriodsProvider>
+                <RouterProvider router={router}/>
+            </PeriodsProvider>
+        </RoutinesProvider>
     );
 }
 

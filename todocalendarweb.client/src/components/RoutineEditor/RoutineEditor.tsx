@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom"
 import { WORK_DAYS } from "../../constants/constanst"
-import { PeriodEditor } from "../PeriodEditor/PeriodEditor"
 import { Swiper } from "../Swiper/Swiper"
 import { useEffect, useState } from "react"
 import { Routine, RoutineSchema } from "../../models/routine"
 import { httpGet } from "../../utils/http"
+import { PeriodsTimeline } from "../PeriodsTimeline/PeriodsTimeline"
+import usePeriods from "../../hooks/usePeriods"
 
 export const RoutineEditor = () => {
 
     const {id} = useParams()
     const [routine, setRoutine] = useState<Routine>()
+    const {periods} = usePeriods()
 
     useEffect(() => {
         if(id != undefined)
@@ -27,8 +29,16 @@ export const RoutineEditor = () => {
                 <Swiper slidesPerView={4}>
                     {
                         WORK_DAYS.map((day, index) => {
+                            const filteredPeriods = periods.filter(period => period.dayOfWeek == index)
                             return (
-                                <PeriodEditor key={index} title={day} dayOfWeek={index} routineId={id}/>
+                                <PeriodsTimeline 
+                                    key={index}
+                                    title={day}
+                                    dayOfWeek={index}
+                                    routineId={id}
+                                    periods={filteredPeriods}
+                                    isEditable={true}
+                                />
                             )
                         })
                     }

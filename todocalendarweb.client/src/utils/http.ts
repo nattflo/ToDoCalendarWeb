@@ -1,6 +1,6 @@
 
 export async function httpGet<T>(request: string): Promise<T> {
-    const response = await fetch("/api/"+request);
+    const response = await fetch(`/api/${request}`);
 
     if(!response.ok){
         throw new Error(response.statusText);
@@ -11,7 +11,7 @@ export async function httpGet<T>(request: string): Promise<T> {
 }
 
 export async function httpPost<T>(request: string, entity: T){
-    const response = await fetch('/api/'+request, {
+    const response = await fetch(`/api/${request}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(entity)
@@ -26,8 +26,8 @@ export async function httpPost<T>(request: string, entity: T){
     return body;
 }
 
-export function httpDelete(entityType: string, entityId: string) {
-    fetch("/api/"+entityType+'/'+entityId, {
+export function httpDelete(request: string) {
+    fetch(`/api/${request}`, {
         method: 'DELETE'
     });
 }
