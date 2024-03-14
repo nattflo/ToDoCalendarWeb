@@ -5,6 +5,7 @@ import { RoutineEditor } from './components/RoutineEditor/RoutineEditor';
 import { Routines } from './components/Routines/Routines';
 import { PeriodsProvider } from './contexts/PeriodContext';
 import { RoutinesProvider } from './contexts/RoutineContext';
+import { TasksProvider } from './contexts/TasksContext';
 
 
 const App = () => {
@@ -27,7 +28,9 @@ const App = () => {
     return (
         <RoutinesProvider>
             <PeriodsProvider>
-                <RouterProvider router={router}/>
+                <TasksProvider>
+                    <RouterProvider router={router}/>
+                </TasksProvider>
             </PeriodsProvider>
         </RoutinesProvider>
     );

@@ -2,21 +2,22 @@ import { useParams } from "react-router-dom"
 import { WORK_DAYS } from "../../constants/constanst"
 import { Swiper } from "../Swiper/Swiper"
 import { useEffect, useState } from "react"
-import { Routine, RoutineSchema } from "../../models/routine"
-import { httpGet } from "../../utils/http"
+import { Routine } from "../../models/routine"
 import { PeriodsTimeline } from "../PeriodsTimeline/PeriodsTimeline"
 import usePeriods from "../../hooks/usePeriods"
+import useRoutines from "../../hooks/useRoutines"
 
 export const RoutineEditor = () => {
 
     const {id} = useParams()
     const [routine, setRoutine] = useState<Routine>()
+    const {routines} = useRoutines()
     const {periods} = usePeriods()
 
     useEffect(() => {
-        if(id != undefined)
-            fetchRoutine()
-    }, [])
+        if(routines.length > 0)
+            setRoutine(routines.find(r => r.id == id))
+    }, [id, routines])
 
     return (
         <div className="RoutineEditor">
@@ -46,10 +47,4 @@ export const RoutineEditor = () => {
             }
         </div>
     )
-
-    async function fetchRoutine() {
-        const routineSchema = await httpGet<RoutineSchema>('routines/'+id)
-        const routine = Routine.createFromSchema(routineSchema)
-        setRoutine(routine)
-    }
 }

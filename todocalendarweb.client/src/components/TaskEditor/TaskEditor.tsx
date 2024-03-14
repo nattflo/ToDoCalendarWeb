@@ -1,9 +1,8 @@
-import { Task, TaskSchema } from '../../models/task'
+import { Task, TaskCreateDTO } from '../../models/task'
 import { EditableText } from '../EditableText/EditableText'
 import './style.css';
 import { TaskItem } from './TaskItem/TaskItem';
-import { useEffect, useState } from 'react';
-import { httpDelete, httpGet, httpPost, httpPut } from '../../utils/http';
+import useTasks from '../../hooks/useTasks';
 
 enum TaskWrapperModes  {
     Editing,
@@ -22,38 +21,18 @@ export const TaskEditor = ({
 
 }: TaskWrapperProps) => {
 
-    const [tasks, setTasks] = useState<Array<Task>>([])
+    const {tasks, createTask, updateTask, deleteTask} = useTasks()
 
-    useEffect(() => {
-        fetchTasks();
-    }, [])
-
-    const updateTask = (changedTask: Task) => {
-        httpPut<Task>('tasks', changedTask.id, changedTask);
-        const changedTasks = tasks?.map(task => {
-            if(task.id === changedTask.id) return changedTask;
-            else return task;
-        })
-        setTasks(changedTasks);
+    const handleTaskUpdating = (changedTask: Task) => {
+        updateTask(changedTask)
     }
 
-    const removeTask = (taskId: string) => {
-        httpDelete(`tasks/${taskId}`)
-        const changedTasks = tasks?.filter(task => task.id != taskId);
-        setTasks(changedTasks);
+    const handleTaskDeleting = (taskId: string) => {
+        deleteTask(taskId)
     }
 
-    async function addTask (taskSchema: TaskSchema) {
-        const newTaskSchema = await httpPost<TaskSchema>('tasks', taskSchema);
-        const task = Task.createFromSchema(newTaskSchema);
-        const newTasks : Array<Task> = tasks != undefined ? [...tasks, task] : [task];
-        setTasks(newTasks);
-    }
-
-    async function fetchTasks () {
-        const taskSchemas = await httpGet<Array<TaskSchema>>('periods/'+ periodId +'/tasks');
-        const tasks = taskSchemas.map(schema => Task.createFromSchema(schema));
-        setTasks(tasks);
+    async function handleTaskAdding (taskCreateDTO: TaskCreateDTO) {
+        createTask(taskCreateDTO)
     }
 
     return(
@@ -64,24 +43,26 @@ export const TaskEditor = ({
                         key={task.id}
                         task={task}
                         mode={mode}
-                        onChange={updateTask}
-                        onRemove={removeTask}
+                        onChange={handleTaskUpdating}
+                        onRemove={handleTaskDeleting}
                     />
                 )
             }
             {
                 mode == TaskWrapperModes.Editing &&
-                <li className="TaskCreator">
-                    <EditableText 
+                <li className="TaskCreator" key="input">
+                    <EditableText
+                        key="input"
                         tag='div'
                         placeholder='Введите название задачи'
                         onChange={(text) => 
-                            addTask({
+                            handleTaskAdding({
                                 name: text,
-                                periodId: periodId,
-                                isComplited: false
-                            })
-                    }/>
+                                periodId: periodId
+                            })}
+                        isFocus={true}
+                        isClear={true}
+                    />
                 </li>
             }
         </ul>

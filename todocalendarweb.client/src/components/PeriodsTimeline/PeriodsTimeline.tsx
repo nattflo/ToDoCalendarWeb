@@ -104,7 +104,6 @@ export const PeriodsTimeline = ({
                 periodId && openedPeriod !== undefined &&
                 <PeriodEditorModal
                     periodId={periodId}
-                    //onClose={fetchPeriods}
                 />
             }
         </div>
@@ -149,15 +148,6 @@ export const PeriodsTimeline = ({
     }
 
     function periodModelToViewModel(period: PeriodModel): PeriodViewModel{
-        const view = {
-            ...period,
-            rowStart: timeToRow(period.timeInterval.startTime), 
-            rowEnd: timeToRow(period.timeInterval.endTime)
-        }
-        console.log(`period: ${period.timeInterval} view: ${view.rowStart, view.rowEnd}`)
-        console.log(period.timeInterval)
-        console.log(`view:`)
-        console.log(view.rowStart, view.rowEnd)
         return {
             ...period,
             rowStart: timeToRow(period.timeInterval.startTime), 

@@ -33,6 +33,7 @@ export const ModalInput = ({
                 tag='p'
                 placeholder={placeholder}
                 onChange={onChange}
+                isFocus={true}
             />
         </Modal>
     )
