@@ -1,14 +1,29 @@
-import { TimeInterval, TimeIntervalSchema } from "./timeInterval";
+import { TimeInterval, TimeIntervalSchema } from "./timeInterval"
 
 export type PeriodSchema = {
-    readonly id? : string;
-    readonly name: string;
-    readonly routineId: string;
-    readonly dayOfWeek: number;
-    readonly timePeriod: TimeIntervalSchema;
+    readonly id? : string
+    readonly name: string
+    readonly routineId: string
+    readonly dayOfWeek: number
+    readonly timePeriod: TimeIntervalSchema
 }
 
-export class Period {
+export type PeriodCreateDTO = {
+    readonly name: string
+    readonly routineId: string
+    readonly dayOfWeek: number
+}
+
+export type PeriodViewModel = {
+    readonly id : string
+    readonly name: string
+    readonly routineId: string
+    readonly dayOfWeek: number
+    readonly rowStart: number
+    readonly rowEnd: number
+}
+
+export class PeriodModel {
     readonly id : string;
     readonly name : string;
     readonly routineId: string;
@@ -33,10 +48,10 @@ export class Period {
         }
     }
 
-    static createFromSchema(schema: PeriodSchema) : Period {
+    static createFromSchema(schema: PeriodSchema) : PeriodModel {
         if(!schema.id)
             throw new Error('ID cannot be empty')
 
-        return new Period(schema.id, schema.name, schema.routineId, schema.dayOfWeek, TimeInterval.createFromSchema(schema.timePeriod));
+        return new PeriodModel(schema.id, schema.name, schema.routineId, schema.dayOfWeek, TimeInterval.createFromSchema(schema.timePeriod));
     }
 }

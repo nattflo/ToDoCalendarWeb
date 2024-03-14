@@ -38,7 +38,7 @@ export const TaskEditor = ({
     }
 
     const removeTask = (taskId: string) => {
-        httpDelete('tasks', taskId)
+        httpDelete(`tasks/${taskId}`)
         const changedTasks = tasks?.filter(task => task.id != taskId);
         setTasks(changedTasks);
     }

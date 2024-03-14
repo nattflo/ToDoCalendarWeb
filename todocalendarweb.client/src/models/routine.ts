@@ -1,4 +1,9 @@
-import { Period, PeriodSchema } from "./period"
+import { PeriodModel, PeriodSchema } from "./period"
+
+export type RoutineCreateDTO = {
+    name: string,
+    description: string
+}
 
 export type RoutineSchema = {
     id?: string
@@ -11,11 +16,11 @@ export class Routine {
     readonly id: string
     readonly name: string
     readonly description: string
-    readonly periods: Period[]
+    readonly periods: PeriodModel[]
 
     readonly schema: RoutineSchema
 
-    constructor(id : string, name: string, description: string, periods: Period[]) {
+    constructor(id : string, name: string, description: string, periods: PeriodModel[]) {
         this.id = id
         this.name = name
         this.description = description
@@ -37,7 +42,7 @@ export class Routine {
             schema.id,
             schema.name,
             schema.description,
-            schema.periods != undefined ? schema.periods.map(p => Period.createFromSchema(p)) : []
+            schema.periods != undefined ? schema.periods.map(p => PeriodModel.createFromSchema(p)) : []
         )
     }
 }

@@ -1,23 +1,18 @@
-import { useEffect, useState } from "react"
-import { httpDelete, httpGet, httpPost, httpPut } from "../../utils/http"
-import { Routine, RoutineSchema } from "../../models/routine"
+import { useState } from "react"
+import { Routine, RoutineCreateDTO } from "../../models/routine"
 import { BiPlusCircle, BiTrashAlt } from "react-icons/bi"
-
-import './style.css'
 import { Link } from "react-router-dom"
 import { EditableText } from "../EditableText/EditableText"
 import { GoCalendar } from "react-icons/go"
 import { ModalInput } from "../Modal/ModalInput/ModalInput"
+import useRoutines from "../../hooks/useRoutines"
+import './style.css'
 
 
 export const Routines = () => {
 
-    const [routines, setRoutines] = useState<Routine[]>()
+    const {routines, createRoutine, updateRoutine, deleteRoutine} = useRoutines()
     const [isInputOpen, setIsInputOpen] = useState(false)
-
-    useEffect(() => {
-        fetchRoutines()
-    }, [])
 
     return (
         <div className="Routines">
@@ -36,11 +31,11 @@ export const Routines = () => {
                                         <Link to={routine.id}>
                                             <GoCalendar/>
                                         </Link>
-                                        <EditableText tag="div" text={routine.name} onChange={name => updateRoutine(new Routine(routine.id, name, routine.description, routine.periods))}/>
+                                        <EditableText tag="div" text={routine.name} onChange={name => handleRoutineUpdating(new Routine(routine.id, name, routine.description, routine.periods))}/>
                                     </div>
                                     <BiTrashAlt
                                         className='RemoveIcon'
-                                        onClick={() => deleteRoutine(routine.id)}
+                                        onClick={() => handleRoutineDeleting(routine.id)}
                                     />
                                 </li>
                             ))
@@ -51,38 +46,25 @@ export const Routines = () => {
             {
                 isInputOpen &&
                 <ModalInput
-                        placeholder='Введите название рутины'
-                        onClose={() => setIsInputOpen(false)}
-                        onChange={(routineName) => addRoutine(routineName)}
+                    placeholder='Введите название рутины'
+                    onClose={() => setIsInputOpen(false)}
+                    onChange={handleRoutineAdding}
                 />
             }
         </div>
     )
 
-    async function fetchRoutines() {
-        const routineSchemas = await httpGet<RoutineSchema[]>('routines')
-        const routine = routineSchemas.map(schema => Routine.createFromSchema(schema))
-        setRoutines(routine)
+    function handleRoutineAdding(name: string) {
+        setIsInputOpen(false)
+        const createDTO: RoutineCreateDTO = {name: name, description: '' }
+        createRoutine(createDTO)
+
     }
-    async function addRoutine(name: string) {
-        setIsInputOpen(false);
-        const newSchema: RoutineSchema = {name: name, periods: [], description: '' }
-        const routineSchema = await httpPost<RoutineSchema>('routines', newSchema)
-        const routine = Routine.createFromSchema(routineSchema)
-        const newRoutines = routines != undefined ? [...routines, routine] : [routine]
-        setRoutines(newRoutines)
+    function handleRoutineUpdating(changedRoutine: Routine){
+        updateRoutine(changedRoutine)
     }
-    async function updateRoutine(changedRoutine: Routine){
-        httpPut<RoutineSchema>('routines', changedRoutine.id, changedRoutine.schema)
-        const changedRoutines = routines?.map(routine => {
-            if(routine.id === changedRoutine.id) return changedRoutine
-            else return routine
-        })
-        setRoutines(changedRoutines)
-    }
-    function deleteRoutine(routineId: string) {
-        httpDelete('routines', routineId)
-        const changedRoutines = routines?.filter(routine => routine.id != routineId)
-        setRoutines(changedRoutines)
+
+    function handleRoutineDeleting(routineId: string) {
+        deleteRoutine(routineId)
     }
 }

@@ -1,12 +1,12 @@
-import { CSSProperties, useEffect, useState } from 'react';
+import { CSSProperties, useEffect, useRef, useState } from 'react';
 import { Modal } from '../../Modal/modal'
 import './style.css'
 import { useNavigate } from 'react-router-dom';
 import { EditableText } from '../../EditableText/EditableText';
 import TaskWrapperModes, { TaskEditor } from '../../TaskEditor/TaskEditor';
-import { Period, PeriodSchema } from '../../../models/period';
-import { httpDelete, httpGet, httpPut } from '../../../utils/http';
+import { PeriodModel } from '../../../models/period';
 import { BiTrashAlt } from 'react-icons/bi';
+import usePeriods from '../../../hooks/usePeriods';
 
 interface PeriodEditorModalProps {
     periodId: string
@@ -15,13 +15,15 @@ interface PeriodEditorModalProps {
 
 export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorModalProps) => {
 
-    const [period, setPeriod] = useState<Period>()
-    const [isLoading, setIsLoading] = useState(true)
-    const navigate = useNavigate();
+    const [period, setPeriod] = useState<PeriodModel>()
+    const periodsHook = useRef(usePeriods());
+    const {deletePeriod, updatePeriod, periods} = periodsHook.current
+    const navigate = useNavigate()
 
     useEffect(() => {
-        fetchPeriod();
-    }, []) 
+        if(periods.length != 0)
+            setPeriod(periods.find(p => p.id == periodId))
+    }, [])
 
     const close = () => {
         onClose()
@@ -47,13 +49,13 @@ export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorMod
             onClickOutside={close}
         >
             {
-                !isLoading && period != undefined &&
+                period && 
                 <div className='ModalContent'>
                     <div className="PeriodEditorHeader">
                         <EditableText
                             tag={'h2'}
                             text={period?.name}
-                            onChange={name => updatePeriod(new Period(period.id, name, period.routineId, period.dayOfWeek, period.timeInterval))}
+                            onChange={name => handlePeriodUpdating(new PeriodModel(period.id, name, period.routineId, period.dayOfWeek, period.timeInterval))}
                         />
                     </div>
                     <div className="PeriodEditorBody">
@@ -68,7 +70,7 @@ export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorMod
                         </div>
                         <div 
                             className="Deleting"
-                            onClick={() => deletePeriod()}
+                            onClick={handlePeriodDeleting}
                         >
                             <BiTrashAlt
                             />
@@ -82,21 +84,13 @@ export const PeriodEditorModal = ({onClose= () => {}, periodId}: PeriodEditorMod
         </Modal>
     )
 
-    function deletePeriod() {
-        httpDelete('periods', periodId)
+    function handlePeriodDeleting() {
+        deletePeriod(periodId)
         close()
     }
 
-    async function fetchPeriod() {
-        setIsLoading(true)
-        const periodSchema = await httpGet<PeriodSchema>('periods/'+ periodId)
-        const period = Period.createFromSchema(periodSchema)
-        setPeriod(period)
-        setIsLoading(false)
+    async function handlePeriodUpdating(changedPeriod: PeriodModel){
+        updatePeriod(changedPeriod)
     }
-
-    async function updatePeriod(changedPeriod: Period){
-        httpPut<PeriodSchema>('periods', changedPeriod.id, changedPeriod.schema)
-        setPeriod(period)
-    }
+    
 }
