@@ -1,0 +1,21 @@
+.Content{
+    display: grid;
+    column-gap: 50px;
+    grid-template-columns: 1fr 2fr;
+}
+
+.Information{
+    text-align: start;
+}
+
+.PeriodInformation{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.timeProgressBar{
+    padding: 10px;
+    background-color: rgb(24, 28, 36);
+    border-radius: 5px;
+}

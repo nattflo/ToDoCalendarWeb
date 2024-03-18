@@ -13,7 +13,7 @@ export default function useTasks() {
     async function createTask(taskCreateDTO: TaskCreateDTO) {
         const taskSchema: TaskSchema = {
             ...taskCreateDTO,
-            isComplited: false
+            isCompleted: false
         }
         const schema = await httpPost<TaskSchema>('tasks', taskSchema)
         const task = Task.createFromSchema(schema)
@@ -21,7 +21,7 @@ export default function useTasks() {
 	}
 
     function updateTask(task: Task) {
-        httpPut<TaskSchema>('routines', task.id, task.schema)
+        httpPut<TaskSchema>('tasks', task.id, task.schema)
         setTasks(prev => 
         prev.map(t => t.id === task.id ? task : t))
     }

@@ -25,12 +25,12 @@ export const TaskItem = ({
                 mode === TaskWrapperModes.Executing ?
                 <input
                     type='checkbox'
-                    checked={task.isComplited}
+                    checked={task.isCompleted}
                     onChange={() => onChange(new Task(
                         task.id,
                         task.name,
                         task.periodId,
-                        !task.isComplited,
+                        !task.isCompleted,
                         task.description)
                     )}
                 />
@@ -50,7 +50,7 @@ export const TaskItem = ({
                         task.id,
                         text,
                         task.periodId,
-                        task.isComplited,
+                        task.isCompleted,
                         task.description
                     ))}
                 />

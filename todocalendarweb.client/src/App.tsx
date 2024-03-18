@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import './App.css';
-import { Home } from './components/Home';
+import { Home } from './components/Home/Home';
 import { RoutineEditor } from './components/RoutineEditor/RoutineEditor';
 import { Routines } from './components/Routines/Routines';
 import { PeriodsProvider } from './contexts/PeriodContext';
