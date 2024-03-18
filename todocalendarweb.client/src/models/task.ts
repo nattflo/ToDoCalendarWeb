@@ -10,7 +10,7 @@ export type TaskSchema = {
     readonly name: string
     readonly description?: string
     readonly periodId: string
-    readonly isComplited: boolean
+    readonly isCompleted: boolean
 }
 
 export class Task {
@@ -19,17 +19,17 @@ export class Task {
     readonly name: string
     readonly description?: string
     readonly periodId: string
-    readonly isComplited: boolean
+    readonly isCompleted: boolean
     readonly schema: TaskSchema
 
     constructor(id : string, name: string, periodId: string,
-        isComplited: boolean, description?: string) {
+        isCompleted: boolean, description?: string) {
         
         this.id = id
         this.name = name
         this.description = description !== undefined ? description : ''
         this.periodId = periodId
-        this.isComplited = isComplited
+        this.isCompleted = isCompleted
 
         this.schema = {
             ...this
@@ -41,6 +41,6 @@ export class Task {
             throw new Error('ID cannot be empty')
 
         return new Task(schema.id, schema.name, schema.periodId,
-            schema.isComplited, schema.description)
+            schema.isCompleted, schema.description)
     }
 }

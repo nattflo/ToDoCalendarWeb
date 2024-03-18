@@ -3,6 +3,7 @@ import { EditableText } from '../EditableText/EditableText'
 import './style.css';
 import { TaskItem } from './TaskItem/TaskItem';
 import useTasks from '../../hooks/useTasks';
+import { useEffect, useState } from 'react';
 
 enum TaskWrapperModes  {
     Editing,
@@ -21,7 +22,15 @@ export const TaskEditor = ({
 
 }: TaskWrapperProps) => {
 
+    const [currentTasks, setTasks] = useState<Task[]>([])
     const {tasks, createTask, updateTask, deleteTask} = useTasks()
+
+    useEffect(() => {
+        tasks != null &&
+        setTasks(
+            tasks.filter(t => t.periodId == periodId)
+        )
+    }, [tasks, setTasks, periodId])
 
     const handleTaskUpdating = (changedTask: Task) => {
         updateTask(changedTask)
@@ -38,7 +47,7 @@ export const TaskEditor = ({
     return(
         <ul className="TaskWrapper">
             {
-                tasks?.map(task => 
+                currentTasks.map(task => 
                     <TaskItem
                         key={task.id}
                         task={task}
