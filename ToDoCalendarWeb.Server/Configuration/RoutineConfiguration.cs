@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Domain;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace ToDoCalendarWeb.Configuration;
 
@@ -10,8 +11,8 @@ public class RoutineConfiguration : IEntityTypeConfiguration<Routine>
     {
         builder.HasKey(r => r.Id);
 
-        builder.Property(r => r.Id)
-            .ValueGeneratedOnAdd();
+        builder.Property(e => e.Id)
+            .HasValueGenerator<GuidValueGenerator>();
 
         builder.Property(r => r.Name)
             .IsRequired();

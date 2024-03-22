@@ -16,12 +16,12 @@ export class Time {
         return new Time(hours*60 + minutes);
     }
     public static createFromTimeSpanFormat(timeSpanString : string): Time{
-        const [ , hours, minutes] = timeSpanString.split(':').map(Number);
+        const [hours, minutes] = timeSpanString.split(':').map(Number);
         return this.createFromHoursAndMinutes(hours, minutes);
     }
 
     public toTimeSpanString(): string {
-        return `00:${this.hours >= 10 ?this.hours : '0'+this.hours}:${this.minutes >= 10 ? this.minutes : '0'+this.minutes}`;
+        return `${this.hours >= 10 ?this.hours : '0'+this.hours}:${this.minutes >= 10 ? this.minutes : '0'+this.minutes}:00`;
     }
 
     public toString(): string {

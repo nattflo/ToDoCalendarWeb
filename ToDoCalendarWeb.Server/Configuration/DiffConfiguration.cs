@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Domain;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace ToDoCalendarWeb.Configuration;
 
@@ -12,7 +13,7 @@ public class DiffConfiguration : IEntityTypeConfiguration<Diff>
         builder.HasKey(e => e.Id);
 
         builder.Property(e => e.Id)
-            .ValueGeneratedOnAdd();
+            .HasValueGenerator<GuidValueGenerator>();
 
         builder.Property(e => e.ObjectId)
             .IsRequired();
