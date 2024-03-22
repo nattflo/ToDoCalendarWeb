@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Domain;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace ToDoCalendarWeb.Configuration;
 
@@ -11,8 +12,8 @@ public class PeriodConfiguration : IEntityTypeConfiguration<Period>
     {
         builder.HasKey(p => p.Id);
 
-        builder.Property(p => p.Id)
-            .ValueGeneratedOnAdd();
+        builder.Property(e => e.Id)
+            .HasValueGenerator<GuidValueGenerator>();
 
         builder.Property(p => p.Name)
             .IsRequired();

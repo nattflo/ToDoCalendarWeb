@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace ToDoCalendarWeb.Configuration;
 
@@ -9,8 +10,8 @@ public class TaskConfiguration : IEntityTypeConfiguration<Domain.Task>
     {
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Id)
-            .ValueGeneratedOnAdd();
+        builder.Property(e => e.Id)
+            .HasValueGenerator<GuidValueGenerator>();
 
         builder.Property(t => t.Name)
             .IsRequired();

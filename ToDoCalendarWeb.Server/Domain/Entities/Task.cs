@@ -1,4 +1,6 @@
-﻿namespace ToDoCalendarWeb.Domain;
+﻿using System.Text.Json.Serialization;
+
+namespace ToDoCalendarWeb.Domain;
 
 public class Task : AbstractTrackableEntity
 {
@@ -8,5 +10,6 @@ public class Task : AbstractTrackableEntity
     public required Guid PeriodId { get; set; }
     public bool IsDraft { get; set; }
     public bool IsCompleted { get; set; }
+    [JsonIgnore]
     public override bool IsTracked { get; set; } = true;
 }
