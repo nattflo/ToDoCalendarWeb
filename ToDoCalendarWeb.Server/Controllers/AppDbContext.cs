@@ -14,7 +14,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseInMemoryDatabase("db");//.AddInterceptors(new TrackChangesInterceptor(this));
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=todoCalendarDb;User Id=postgres;Password=4801;");
         base.OnConfiguring(optionsBuilder);
     }
 
@@ -24,6 +24,8 @@ public class AppDbContext : DbContext
         new PeriodConfiguration().Configure(modelBuilder.Entity<Period>());
         new TaskConfiguration().Configure(modelBuilder.Entity<Domain.Task>());
         new DiffConfiguration().Configure(modelBuilder.Entity<Diff>());
+
+        modelBuilder.Seed();
 
     }
 }
