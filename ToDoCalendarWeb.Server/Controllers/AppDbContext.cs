@@ -28,4 +28,9 @@ public class AppDbContext : DbContext
         modelBuilder.Seed();
 
     }
+
+    public override int SaveChanges()
+    {
+        return base.SaveChanges();
+    }
 }
