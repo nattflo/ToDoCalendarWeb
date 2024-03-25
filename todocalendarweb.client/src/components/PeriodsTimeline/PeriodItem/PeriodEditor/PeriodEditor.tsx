@@ -1,5 +1,5 @@
 import Draggable from "react-draggable"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Link } from "react-router-dom"
 import { PeriodViewModel } from "../../../../models/period"
 import { TIME_STEPS_COUNT } from "../../../../constants/constanst"
@@ -16,12 +16,17 @@ export const PeriodEditor = ({period, step, onChange = () => true, onSave = () =
 
     const [isMoving, setIsMoving] = useState(false)
     const [isCollided, setIsCollided] = useState(false)
-    const [originPeriod, setOriginPeriod] = useState<PeriodViewModel>(period)
+    const [originalPeriod, setoriginalPeriod] = useState<PeriodViewModel>(period)
     const [currentPeriod, setCurrentPeriod] = useState<PeriodViewModel>(period)
 
     const topResizeHandleRef = useRef(null)
     const bottomResizeHandleRef = useRef(null)
     const movingHandleRef = useRef(null)
+
+    useEffect(() => {
+        setCurrentPeriod(period)
+        setoriginalPeriod(period)
+    }, [period])
 
     const handleTopResize = (direction: number) => {
 
@@ -35,7 +40,7 @@ export const PeriodEditor = ({period, step, onChange = () => true, onSave = () =
                 }
                 if(onChange(newPeriod)){
                     setCurrentPeriod(newPeriod)
-                    setOriginPeriod(newPeriod)
+                    setoriginalPeriod(newPeriod)
                 }
             }
     }
@@ -70,7 +75,7 @@ export const PeriodEditor = ({period, step, onChange = () => true, onSave = () =
                 }
                 if(onChange(newPeriod)){
                     setCurrentPeriod(newPeriod)
-                    setOriginPeriod(newPeriod)
+                    setoriginalPeriod(newPeriod)
                 }
             }
     }
@@ -79,8 +84,8 @@ export const PeriodEditor = ({period, step, onChange = () => true, onSave = () =
         setIsMoving(false)
         if(isCollided){
             setIsCollided(false)
-            setCurrentPeriod(originPeriod)
-            onSave(originPeriod)
+            setCurrentPeriod(originalPeriod)
+            onSave(originalPeriod)
         }else onSave(currentPeriod)
     }
 

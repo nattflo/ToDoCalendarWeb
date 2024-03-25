@@ -83,21 +83,21 @@ export const PeriodsTimeline = ({
                     {periods.map((period) =>
                         <PeriodItem
                             key={period.id}
-                            isEditable={isEditable || period.routineId == routineId}
+                            isEditable={isEditable ? period.routineId == routineId : isEditable}
                             period={periodModelToViewModel(period)}
                             step={step}
                             onChange={handlePeriodUpdating}
                             onSave={period => updatePeriod(periodViewModelToModel(period))}
                         />
-                        )}
+                    )}
                 </div>
             </div>
             {
                 isInputOpen &&
                 <ModalInput
-                        placeholder='Введите название периода'
-                        onClose={() => setIsInputOpen(false)}
-                        onChange={handleAddingPeriod}
+                    placeholder='Введите название периода'
+                    onClose={() => setIsInputOpen(false)}
+                    onChange={handleAddingPeriod}
                 />
             }
             {
