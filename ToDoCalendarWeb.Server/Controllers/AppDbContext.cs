@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ToDoCalendarWeb.Configuration;
 using ToDoCalendarWeb.Domain;
-using ToDoCalendarWeb.Interceptors;
 
 namespace ToDoCalendarWeb.Controllers;
 

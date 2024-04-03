@@ -1,16 +1,14 @@
-import React from 'react';
+import { Outlet } from 'react-router-dom';
 import { NavMenu } from './NavMenu';
 
-interface Props {
-  children?: React.ReactNode;
-}
-
-const Layout = ({ children }: Props) => {
+const Layout = () => {
     return (
-        <div>
+        <>
             <NavMenu />
-            {children}
-        </div>
+            <div className="Container">
+                <Outlet/>
+            </div>
+        </>
     );
 }
 

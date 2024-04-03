@@ -1,18 +1,27 @@
-﻿a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+﻿.Header{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 20px 20px 20px 20px;
+	background-color: #423952;
+	border-radius: 0px 0px 10px 10px;
 }
 
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+.Header *{
+	margin: 0px;
 }
 
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+.Logo{
+	color: #bb474f;
+	font-size: x-large;
+	font-weight: bold;
+}
+
+.NavItemsWrapper{
+	display: flex;
+	flex-direction: row;
+	list-style: none;
+	gap: 35px;
+	padding: 0px;
 }

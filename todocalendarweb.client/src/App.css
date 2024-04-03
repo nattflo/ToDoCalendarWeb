@@ -1,18 +1,8 @@
 ﻿#root {
     flex: 1;
-    padding: 2rem;
     text-align: center;
 }
 
-tr:nth-child(even) {
-    background: #F2F2F2;
-}
-
-tr:nth-child(odd) {
-    background: #FFF;
-}
-
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+.Container{
+    padding: 0px 2rem 0px 2rem;
 }
