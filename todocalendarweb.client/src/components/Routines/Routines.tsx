@@ -27,7 +27,7 @@ export const Routines = () => {
                         {
                             routines.map(routine => (
                                 <li className="Routine" key={routine.id}>
-                                    <div className="RoutineHeader">
+                                    <div className="RoutineItem">
                                         <Link to={routine.id}>
                                             <GoCalendar/>
                                         </Link>

@@ -1,8 +1,8 @@
 import { Task } from "../../../models/task"
-import { BiTrashAlt } from "react-icons/bi"
 import { EditableText } from "../../EditableText/EditableText"
 import './style.css'
 import TaskWrapperModes from "../TaskEditor"
+import { TrashCanIcon } from "../../Icons/TrashCanIcon/TrashCanIcon"
 
 
 interface TaskItemProps{
@@ -35,7 +35,7 @@ export const TaskItem = ({
                     )}
                 />
                 :
-                <BiTrashAlt
+                <TrashCanIcon
                     onClick={() => onRemove(task.id)}
                 />
             }

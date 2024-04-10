@@ -1,7 +1,8 @@
 .PeriodEditor{
     padding: 10px;
-    background-color: rgb(8,4,12);
-    border-radius: 5px;
+    background-color: var(--secondary-color);
+    border: solid 2px var(--border-color);
+    border-radius: 6px;
 }
 
 .DayTimeline{

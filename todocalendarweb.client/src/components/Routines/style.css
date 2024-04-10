@@ -25,7 +25,7 @@
     background-color: rgb(24,28,36);
 }
 
-.RoutineHeader{
+.RoutineItem{
     display: flex;
     flex-direction: row;
     justify-content: space-between;

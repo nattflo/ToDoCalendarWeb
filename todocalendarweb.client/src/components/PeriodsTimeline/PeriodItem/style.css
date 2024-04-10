@@ -1,11 +1,22 @@
+.PeriodItemEditor{
+    position: relative;
+    grid-column: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    background-color: var(--overlay-bgColor);
+    border: solid 1px var(--border-color);
+    border-radius: 6px;
+}
+
 .Period{
     position: relative;
     grid-column: 1;
     display: flex;
     flex-direction: column;
     justify-content:center;
-    background-color: rgb(24,28,36);
-    border-radius: 2px;
+    border: solid 1px var(--border-color);
+    border-radius: 6px;
 }
 
 .ResizeHandle{

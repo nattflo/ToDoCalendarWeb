@@ -4,8 +4,8 @@
 	justify-content: space-between;
 	align-items: center;
 	padding: 20px 20px 20px 20px;
-	background-color: #423952;
-	border-radius: 0px 0px 10px 10px;
+	background-color: var(--primary-color);
+	border-bottom: solid 2px var(--border-color);
 }
 
 .Header *{

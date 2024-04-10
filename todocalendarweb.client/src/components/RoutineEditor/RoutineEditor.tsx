@@ -8,6 +8,8 @@ import usePeriods from "../../hooks/usePeriods"
 import useRoutines from "../../hooks/useRoutines"
 import { PeriodModel } from "../../models/period"
 
+import './style.css'
+
 export const RoutineEditor = () => {
 
     const {id} = useParams()
@@ -27,7 +29,7 @@ export const RoutineEditor = () => {
         <div className="RoutineEditor">
             {
                 routine != undefined &&
-                <h1>{routine.name}</h1>
+                <h1 className="RoutineHeader">{routine.name}</h1>
             }
             {
                 id != undefined && 

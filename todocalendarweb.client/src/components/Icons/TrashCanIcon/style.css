@@ -1,0 +1,7 @@
+.TrashCanButton{
+    color: var(--accent-color);
+}
+
+.TrashCanButton:hover{
+    color: var(--accent-hover-color);
+}

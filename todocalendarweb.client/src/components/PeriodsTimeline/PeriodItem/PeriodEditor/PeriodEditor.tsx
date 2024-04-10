@@ -93,7 +93,7 @@ export const PeriodEditor = ({period, step, onChange = () => true, onSave = () =
     const movingStyle = isMoving ? {opacity: '0.5', zIndex: '2'} : {}
     
     return(
-        <div className='Period' style={{gridRowStart: currentPeriod.rowStart, gridRowEnd: currentPeriod.rowEnd, ...collidingStyle, ...movingStyle}}>
+        <div className='PeriodItemEditor' style={{gridRowStart: currentPeriod.rowStart, gridRowEnd: currentPeriod.rowEnd, ...collidingStyle, ...movingStyle}}>
             <Link
                 to={`?periodId=${period.id}`}
                 className="PeriodName"

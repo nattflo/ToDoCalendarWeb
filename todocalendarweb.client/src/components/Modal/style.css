@@ -10,6 +10,7 @@
 
 .Modal {
     position: fixed;
-    background-color: rgb(13, 17, 23);
+    background-color: var(--secondary-color);
+    border: solid 2px var(--border-color);
     z-index: 100;
 }

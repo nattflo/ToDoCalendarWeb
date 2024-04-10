@@ -1,6 +1,18 @@
-﻿#root {
+﻿:root {
+    --primary-color: #010409;
+    --secondary-color: #0d1117;
+    --overlay-bgColor: #161b22;
+    --overlay-backdrop-bgColor: #161b2266;
+    --text-color: #ffffff;
+    --accent-color: #ff6f61;
+    --accent-hover-color: #e65a4f;
+    --border-color: #30363d;
+  }
+
+#root {
     flex: 1;
     text-align: center;
+    background-color: var(--primary-color);
 }
 
 .Container{

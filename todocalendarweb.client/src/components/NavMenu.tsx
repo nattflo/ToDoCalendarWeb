@@ -5,7 +5,7 @@ const NavMenu = () => {
 
     return (
         <header className='Header'>
-            <p className="Logo">FINITE</p>
+            <p className="Logo">TODOCALENDAR</p>
             <ul className="NavItemsWrapper">
                 <li className="NavItem">
                     <Link to='/'>

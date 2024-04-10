@@ -31,6 +31,8 @@ export class TimeInterval {
         const startTime = Time.createFromTimeSpanFormat(schema.startTime);
         const endTime = Time.createFromTimeSpanFormat(schema.endTime);
 
+        console.log(startTime + ' ' + endTime )
+
         return new TimeInterval(startTime, endTime);
     }
 
