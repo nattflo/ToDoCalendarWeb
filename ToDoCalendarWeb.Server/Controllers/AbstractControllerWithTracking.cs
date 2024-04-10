@@ -9,6 +9,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpGet("{entityId}/diffs/{id}")]
     public async Task<ActionResult<Diff>> GetDiff([FromRoute] Guid entityId, [FromRoute] Guid id)
     {
+        var diffs = _context.Set<Diff>();
         var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name);
 
         if (diff == null)
@@ -22,7 +23,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpGet("{entityId}/diffs")]
     public async Task<ActionResult<IEnumerable<Diff>>> GetDiffs([FromRoute] Guid entityId)
     {
-        var diffs = await _context.Set<Diff>().Where(d => d.ObjectId == entityId && d.ObjectType == typeof(TEntity).ToString()).ToArrayAsync();
+        var diffs = await _context.Set<Diff>().Where(d => d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name).ToArrayAsync();
 
         if (diffs == null || diffs.Length == 0)
         {
@@ -54,7 +55,7 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
                     diffs.Add(new()
                     {
                         ObjectId = id,
-                        ObjectType = typeof(TEntity).ToString(),
+                        ObjectType = typeof(TEntity).Name,
                         PropName = prop.Name,
                         From = originalValue,
                         To = currentValue,
@@ -71,21 +72,40 @@ public abstract class AbstractControllerWithTracking<TEntity>(AppDbContext conte
     [HttpPut("{entityId}/diffs/{id}/rollback")]
     public async Task<ActionResult> Rollback([FromRoute] Guid entityId, [FromRoute] Guid id)
     {
-        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name);
-
-        if (diff == null)
-        {
-            return BadRequest();
-        }
-
-        var entity =  await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == entityId);
+        var entity = await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == entityId);
 
         if (entity == null)
         {
             return BadRequest();
         }
-        _context.Entry(entity).Property(diff.PropName).CurrentValue = diff.From;
-        entity.IsTracked = _context.Set<Diff>().Any(d => d.PropName == diff.PropName && d.ChangeTime >= diff.ChangeTime && d.Id != id); //Имеются ли изменения этого поля, созданные после
+
+        var diff = await _context.Set<Diff>().FirstOrDefaultAsync(d => d.Id == id && d.ObjectId == entityId && d.ObjectType == typeof(TEntity).Name);
+
+        if (diff == null)
+        {
+            return NotFound();
+        }
+
+        try
+        {
+            typeof(TEntity).GetProperty(diff.PropName).SetValue(entity, diff.From);
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e);
+        }
+
+        if(_context.Set<Diff>().Any(d => d.PropName == diff.PropName && d.ChangeTime >= diff.ChangeTime && d.Id != id))
+        {
+            entity.IsTracked = true;
+        }
+        else
+        {
+            entity.IsTracked = false;
+            _context.Set<Diff>().Remove(diff);
+        }
+
+        _context.Set<TEntity>().Update(entity);
 
         await _context.SaveChangesAsync();
 

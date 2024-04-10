@@ -11,7 +11,7 @@ public class RoutinesController(AppDbContext context) : AbstractControllerWithTr
     [HttpGet("{routineId}/periods")]
     public async Task<ActionResult<IEnumerable<Period>>> GetPeriods([FromRoute] Guid routineId)
     {
-        var periods = await _context.Periods.Where(t => t.RoutineId == routineId).ToArrayAsync();
+        var periods = await _context.Set<Period>().Where(t => t.RoutineId == routineId).ToArrayAsync();
 
         if (periods == null || periods.Length == 0)
         {
